@@ -1,0 +1,44 @@
+#!/bin/bash
+
+CONF="/etc/kvmvnc/kvmvncrc ~/kvmvncrc .kvmvncrc"
+KVMHOSTS="a b c"
+KVMUSER="root"
+VNCVIEWER="xtightvncviewer"
+
+
+guest=$1
+
+if [ -z "$guest" ]; then
+  echo "usage: $0 <guestname>"
+  echo
+  echo "reads config from: $CONF"
+  exit 1
+fi
+
+for f in $CONF; do
+  if [ -r "$f" ]; then
+    echo "reading config from $f"
+    source "$f"
+  fi
+done
+
+
+# search virtual machine
+
+vncdisplay=""
+for h in $KVMHOSTS; do
+  echo "searching on KVM host $h"
+  vncdisplay=$(ssh -l "$KVMUSER" $h "virsh vncdisplay $guest 2>/dev/null")
+  if [ -n "$vncdisplay" ]; then
+    echo "found on $h: $vncdisplay"
+    break
+  fi
+done
+
+if [ -z "$vncdisplay" ]; then
+  echo "VM $guest not found"
+  exit 1
+fi
+
+echo "starting vnc for $vncdisplay"
+$VNCVIEWER $vncdisplay
