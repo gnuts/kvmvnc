@@ -1,0 +1,8 @@
+# kvmvncrc configuration file
+
+# kvmvncrc tries to read configuration from:
+# /etc/kvmvnc/kvmvncrc ~/kvmvncrc .kvmvncrc
+
+KVMUSER="root"
+VNCVIEWER="xtightvncviewer"
+KVMHOSTS="vm1.example.ninja vm2.example.ninja"
