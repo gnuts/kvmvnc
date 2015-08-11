@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONF="/etc/kvmvnc/kvmvncrc ~/kvmvncrc .kvmvncrc"
+CONF="/etc/kvmvnc/kvmvncrc ~/.kvmvncrc .kvmvncrc"
 KVMHOSTS="a b c"
 KVMUSER="root"
 VNCVIEWER="xtightvncviewer"
